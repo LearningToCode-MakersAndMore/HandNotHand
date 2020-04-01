@@ -47,22 +47,16 @@ if __name__ == "__main__":
     # get the reference to the webcam
     camera = cv2.VideoCapture(0)
 
-    # initialize num of frames
-    num_frames = 0
-
     # keep looping, until interrupted
     while(True):
         # get the current frame
-        (grabbed, frame) = camera.read()
+        (_, frame) = camera.read()
 
         # resize the frame
         frame = imutils.resize(frame, width=700)
 
         # flip the frame so that it is not the mirror view
         frame = cv2.flip(frame, 1)
-
-        # clone the frame
-        clone = frame.copy()
 
         # convert the roi to grayscale and blur it
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -77,14 +71,11 @@ if __name__ == "__main__":
 
         (thresholded, segmented) = image
 
-        cv2.drawContours(clone, segmented, -1, (0, 0, 255))
+        cv2.drawContours(frame, segmented, -1, (200, 0, 255))
         # display the frame with segmented hand
         cv2.imshow("Thresholded", thresholded)
 
-        # increment the number of frames
-        num_frames += 1
-
-        cv2.imshow("Video Feed", clone)
+        cv2.imshow("Video Feed", frame)
 
         # observe the keypress by the user
         keypress = cv2.waitKey(1) & 0xFF
