@@ -1,13 +1,17 @@
 import pygame, sys, random
 
 def ball_animation():
-  global ball_speed_x, ball_speed_y #try to change global later
+  global ball_speed_x, ball_speed_y, playerA_score, playerB_score #try to change global later
   ball.x += ball_speed_x
   ball.y += ball_speed_y
 
   if ball.top <= score_section or ball.bottom >= screen_height:
     ball_speed_y *= -1
-  if ball.left <= 0 or ball.right >= screen_width:
+  if ball.left <= 0:
+    playerB_score += 1
+    ball_restart()
+  if ball.right >= screen_width:
+    playerA_score += 1
     ball_restart()
   
   if ball.colliderect(player) or ball.colliderect(opponent):
@@ -100,10 +104,10 @@ while True:
   pygame.draw.aaline(screen, very_orange, (screen_width/2, 0), (screen_width/2,screen_height))
   pygame.draw.aaline(screen, very_orange, (screen_width ,score_section), (0,score_section))
   font = pygame.font.Font(None, 74)
-  text = font.render(str(playerA_score), 1, very_orange)
-  screen.blit(text, (screen_width / 4, 25))
-  text = font.render(str(playerB_score), 1, very_orange)
-  screen.blit(text, ((screen_width / 4) * 3, 25))
+  text = font.render(str(f"Player 1 - {playerA_score}"), 1, very_orange)
+  screen.blit(text, (screen_width / 6, 25))
+  text = font.render(str(f"Player 2 - {playerB_score}"), 1, very_orange)
+  screen.blit(text, ((screen_width / 6) * 4, 25))
 
   # Updating the window
   pygame.display.flip()
