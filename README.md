@@ -1,5 +1,5 @@
 # HandNotHand
-Makers onsite final project    
+Makers onsite <-> final project    
 Cohort: January 2020
 Team Members
 <li>Paulo
@@ -17,7 +17,7 @@ Team Members
 
 ## Description
 
-Describe what the project does,
+The MVP for our project is to be alble to recognize a hand movement on a camera feed.
 
 ## User Stories
 
