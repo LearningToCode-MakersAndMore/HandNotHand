@@ -5,7 +5,7 @@ def ball_animation():
   ball.x += ball_speed_x
   ball.y += ball_speed_y
 
-  if ball.top <= 0 or ball.bottom >= screen_height:
+  if ball.top <= score_section or ball.bottom >= screen_height:
     ball_speed_y *= -1
   if ball.left <= 0 or ball.right >= screen_width:
     ball_restart()
@@ -15,8 +15,8 @@ def ball_animation():
 
 def player_animation():
   player.y += player_speed
-  if player.top <= 0:
-    player.top = 0
+  if player.top <= score_section:
+    player.top = score_section
   if player.bottom >= screen_height:
     player.bottom = screen_height
 
@@ -25,8 +25,8 @@ def opponent_ai():
     opponent.top += opponent_speed
   if opponent.bottom > ball.y:
     opponent.bottom -= opponent_speed
-  if opponent.top <= 0:
-    opponent.top = 0
+  if opponent.top <= score_section:
+    opponent.top = score_section
   if opponent.bottom >= screen_height:
     opponent.bottom = screen_height
 
@@ -43,6 +43,7 @@ clock = pygame.time.Clock()
 # Setting up the main window
 screen_width = 1280
 screen_height = 960
+score_section = 100
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Z~P~ $$$$$$$")
 
@@ -58,6 +59,10 @@ ball_speed_x = 7 * random.choice((1, -1))
 ball_speed_y = 7 * random.choice((1, -1))
 player_speed = 0
 opponent_speed = 7
+
+# Game scores
+playerA_score = 0
+playerB_score = 0
 
 while True:
   # Handling input
@@ -77,6 +82,9 @@ while True:
         player_speed -= 7
       if event.key == pygame.K_UP:
         player_speed += 7
+
+    #Display scores:
+  
         
 
   ball_animation()
@@ -90,7 +98,12 @@ while True:
   pygame.draw.rect(screen,very_orange, opponent)
   pygame.draw.ellipse(screen,very_orange, ball)
   pygame.draw.aaline(screen, very_orange, (screen_width/2, 0), (screen_width/2,screen_height))
-
+  pygame.draw.aaline(screen, very_orange, (screen_width ,score_section), (0,score_section))
+  font = pygame.font.Font(None, 74)
+  text = font.render(str(playerA_score), 1, very_orange)
+  screen.blit(text, (screen_width / 4, 25))
+  text = font.render(str(playerB_score), 1, very_orange)
+  screen.blit(text, ((screen_width / 4) * 3, 25))
 
   # Updating the window
   pygame.display.flip()
