@@ -9,8 +9,9 @@ import argparse
 import imutils
 import time
 import cv2
+import itertools
 
-# construct the argument parse and parse the arguments
+# construct the argument parse and parse the arguments. Final line sets inputs to their respective variables.
 ap = argparse.ArgumentParser()
 ap.add_argument("-p", "--prototxt", required=True,
 	help="path to Caffe 'deploy' prototxt file")
@@ -71,6 +72,8 @@ while True:
 	# update our centroid tracker using the computed set of bounding
 	# box rectangles
 	objects = ct.update(rects)
+	if len(objects) != 0:
+		print(list(objects.items())[0: 1])
 
 	# loop over the tracked objects
 	for (objectID, centroid) in objects.items():
